@@ -4,7 +4,7 @@ class ExcelReader:
     
     @staticmethod
     def read_web():
-        return ExcelReader.read_excel_file("client_domains_000.xlsx")
+        return ExcelReader.read_excel_file("excel/client_domains_000.xlsx")
     
     @staticmethod
     def read_news():
