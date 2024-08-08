@@ -163,3 +163,4 @@ cython_debug/
 
 # Excel files
 excel/
+output/
