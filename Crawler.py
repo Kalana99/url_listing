@@ -1,7 +1,7 @@
 import urllib.request
 from urllib.parse import urlsplit, urlunsplit, urljoin, urlparse
 import re
-from ExcelReader import ExcelReader
+from ExcelHandler import ExcelHandler
 
 class Crawler:
 
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     # crawler = Crawler(url)
     # print(crawler.start())
     
-    (names, domains) = ExcelReader.read_web()
+    (names, domains) = ExcelHandler.read_web()
     
     for domain in domains:
         print(f"Domain: {domain}")

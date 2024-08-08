@@ -1,14 +1,14 @@
 import pandas as pd
 
-class ExcelReader:
+class ExcelHandler:
     
     @staticmethod
     def read_web():
-        return ExcelReader.read_excel_file("excel/client_domains_000.xlsx")
+        return ExcelHandler.read_excel_file("excel/client_domains_000.xlsx")
     
     @staticmethod
     def read_news():
-        return ExcelReader.read_excel_file("utils/news.xlsx")
+        return ExcelHandler.read_excel_file("utils/news.xlsx")
     
     @staticmethod
     def read_excel_file(file_path):
