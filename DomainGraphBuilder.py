@@ -10,6 +10,9 @@ class DomainGraphBuilder:
     def add_url(self, url):
         path_parts = urlparse(url).path.strip("/").split("/")
         current_level = self.graph["children"]
+        
+        if path_parts == ['']:  # Ignore root path
+            return
 
         for part in path_parts:
             # Check if this part of the path is already in the current level
