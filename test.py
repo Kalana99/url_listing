@@ -1,4 +1,5 @@
 import pandas as pd
+from urllib.parse import urlsplit, urlunsplit, urljoin, urlparse
 
 def read_excel_file(file_path):
 
@@ -9,20 +10,47 @@ def read_excel_file(file_path):
         print(f"Error reading Excel file: {e}")
         return Exception("Error reading Excel file" + str(e))
     
-# (names, domains) = read_excel_file("excel/client_domains_000.xlsx")
-# (names2, urls) = read_excel_file("output/out_client_urls_001.xlsx")
-# names2 = list(set(names2))
-
-# ignored = []
-
-# for name in names:
-#     if name not in names2:
-#         ignored.append(name)
+def write_to_excel(file_path, data):
         
-# print(ignored)
+    try:
+        df = pd.DataFrame(data)
+        df.to_excel(file_path, index=False)
+    except Exception as e:
+        print(f"Error writing to Excel file: {e}")
+        return Exception("Error writing to Excel file" + str(e))
+    
 
-# ['Black Nova Capital Pty Ltd ', 'Afterwork Ventures Pty Ltd ', 'Empress Capital Pty Ltd ', 'Ten 13 Investment Management Pty Ltd ', 'For Purpose Investment Partners Ltd ', 'Holon Global Investment Partners Pty Ltd ', 'Olive Financing Entity Ltd ', 'Social Impact Funds Management Pty Ltd ']
+(names, urls) = read_excel_file("excel/client_domains_003_missing.xlsx")
+input_list = []
 
-a = [1, 2, 3, 4, 5]
-b = [0, 0, 0, 0, 0, 0]
-print(a + b)
+for i in range(len(names)):
+    input_list.append({"name": names[i], "url": urls[i]})
+    
+(scanned_names, scanned_urls) = read_excel_file("output/out_client_urls_004_missing.xlsx")
+out_list = []
+
+for i in range(len(scanned_names)):
+    out_list.append({"name": scanned_names[i], "url": scanned_urls[i]})
+    
+final_list = []    
+for i in range(len(out_list)):
+    
+    if out_list[i]["url"] != "/":
+        
+        domain = ""
+        
+        for item in input_list:
+            
+            if item["name"] == out_list[i]["name"]:
+                domain = item["url"]
+                break
+            
+        if domain != "":
+            
+            if domain == out_list[i]["url"]:
+                final_list.append({"Client Name": out_list[i]["name"], "Website Address (url)": out_list[i]["url"]})
+            else:
+                final_list.append({"Client Name": out_list[i]["name"], "Website Address (url)": urljoin(domain, out_list[i]["url"])})
+
+print(len(final_list))
+write_to_excel("final/final_004_missing.xlsx", final_list)    

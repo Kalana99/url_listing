@@ -3,9 +3,9 @@ from ntpath import join
 from os import listdir
 import pandas as pd
 
-INPUT_DOMAINS = "ignored/ignored_client_urls_003.xlsx"
-OUTPUT_URLS = "output/out_client_urls_004_ignored.xlsx"
-IGNORED_URLS = "ignored/ignored_client_urls_004.xlsx"
+INPUT_DOMAINS = "excel/client_domains_003_missing.xlsx"
+OUTPUT_URLS = "output/out_client_urls_004_missing.xlsx"
+IGNORED_URLS = "ignored/ignored_client_urls_004_missing.xlsx"
 
 TEST_INPUT_DOMAINS = "excel/test0.xlsx"
 TEST_OUTPUT_URLS = "output/test0.xlsx"
