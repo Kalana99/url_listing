@@ -23,20 +23,6 @@ class Crawler:
         self.visited_links.append(self.url)
         
         self.crawl(self.url)
-        
-        # print()
-        # print(len(self.found_links))
-        # print(len(self.visited_links))
-        # print()
-        
-        # print()
-        # print("Found links:")
-        # for link in self.found_links:
-        #     print(link)
-        # print()
-        # print("Visited links:")
-        # for link in self.visited_links:
-        #     print(link)
 
         return self.found_links
 
@@ -44,9 +30,21 @@ class Crawler:
     def crawl(self, url):
         if not self.no_verbose:
             print("Parsing " + url)
+            
+        # Define custom headers
+        # headers = {
+        #     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',  # A common user-agent string
+        #     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',  # Accept header
+        #     'Accept-Language': 'en-US,en;q=0.5'  # Accept-Language header
+        # }
+        
+        # req = urllib.request.Request(url, headers=headers)
+        
         try:
             response = urllib.request.urlopen(url, timeout=15)
+            # response = urllib.request.urlopen(req, timeout=15)
         except Exception as e:
+            print(e)
             print('404 error')
             self.ignored_links.append(url)
             return
@@ -120,7 +118,7 @@ class Crawler:
     def is_url(self, url):
         scheme, netloc, path, qs, anchor = urlsplit(url)
         
-        if url != '' and scheme in ['http', 'https', ''] and path not in ['blog', 'blogs', 'article', 'articles', 'company', 'companies', 'portfolio', 'blog-article', 'portfolio-company']:
+        if url != '' and scheme in ['http', 'https', '']:
             return True 
         else:
             return False
@@ -135,18 +133,20 @@ class Crawler:
         
 if __name__ == '__main__':
     
-    # url = "https://www.dragonflyenvirocapital.com/"
+    # url = "http://www.merkle.com.au"
     # crawler = Crawler()
     # out = crawler.start(url)
     
     # for i in out:
     #     print(i)
     
-    (scanned_names, scanned_urls) = ExcelHandler.read_excel_file("output/out_client_urls_001.xlsx")
-    (scanned_names2, scanned_urls2) = ExcelHandler.read_excel_file("output/out_client_urls_002_ignored.xlsx")
-    (scanned_names3, scanned_urls3) = ExcelHandler.read_excel_file("output/out_client_urls_003_ignored.xlsx")
+    scanned_urls = []
     
-    scanned_urls = scanned_urls + scanned_urls2 + scanned_urls3
+    # (scanned_names, scanned_urls) = ExcelHandler.read_excel_file("output/out_client_urls_001.xlsx")
+    # (scanned_names2, scanned_urls2) = ExcelHandler.read_excel_file("output/out_client_urls_002_ignored.xlsx")
+    # (scanned_names3, scanned_urls3) = ExcelHandler.read_excel_file("output/out_client_urls_003_ignored.xlsx")
+    
+    # scanned_urls = scanned_urls + scanned_urls2 + scanned_urls3
     
     out_list = []
     ignored_list = []
@@ -162,11 +162,14 @@ if __name__ == '__main__':
         
         for url in url_list:
             
-            if crawler.is_url_force(url) and url not in scanned_urls:
-                out_list.append({'Client Name': name, 'Website Address (url)': url})
+            # if crawler.is_url_force(url):
+            out_list.append({'Client Name': name, 'Website Address (url)': url})
             
         for url in crawler.ignored_links:
-            ignored_list.append({'Client Name': name, 'Website Address (url - not fount)': url})
+            ignored_list.append({'Client Name': name, 'Website Address (url)': url})
+            
+    print(len(out_list))
+    print(len(ignored_list))
     
     # count distinct names in the out_list
     print(len(set([x['Client Name'] for x in out_list])))
