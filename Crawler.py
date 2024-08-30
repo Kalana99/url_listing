@@ -109,6 +109,10 @@ class Crawler:
 
     def normalize(self, url):
         scheme, netloc, path, qs, anchor = urlsplit(url)
+        # Remove segment id (e.g., /page#section)
+        path = re.sub(r'/#.*', '', path)
+        # Remove anchor (e.g., #anchor)
+        anchor = ''
         return urlunsplit((scheme, netloc, path, qs, anchor))
 
     def is_internal(self, url):
@@ -133,12 +137,12 @@ class Crawler:
         
 if __name__ == '__main__':
     
-    # url = "http://www.merkle.com.au"
-    # crawler = Crawler()
-    # out = crawler.start(url)
+    url = "http://www.merkle.com.au"
+    crawler = Crawler()
+    out = crawler.start(url)
     
-    # for i in out:
-    #     print(i)
+    for i in out:
+        print(i)
     
     scanned_urls = []
     
