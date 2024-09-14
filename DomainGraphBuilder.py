@@ -31,25 +31,28 @@ class DomainGraphBuilder:
         for url in urls:
             self.add_url(url)
         return self.graph
+    
 
-# Example usage:
-urls = [
-    "https://example.org",
-    "https://example.org/page1",
-    "https://example.org/page2",
-    "https://example.org/page3",
-    "https://example.org/page4",
-    "https://example.org/page1/subpage1",
-    "https://example.org/page1/subpage2",
-    "https://example.org/page2/subpage1",
-    "https://example.org/page2/subpage2",
-    "https://example.org/page3/subpage1"
-]
+if __name__ == "__main__":
 
-builder = DomainGraphBuilder("https://example.org")
-graph = builder.build_graph(urls)
+    # Example usage:
+    urls = [
+        "https://example.org",
+        "https://example.org/page1",
+        "https://example.org/page2",
+        "https://example.org/page3",
+        "https://example.org/page4",
+        "https://example.org/page1/subpage1",
+        "https://example.org/page1/subpage2",
+        "https://example.org/page2/subpage1",
+        "https://example.org/page2/subpage2",
+        "https://example.org/page3/subpage1"
+    ]
 
-print(graph)
+    builder = DomainGraphBuilder("https://example.org")
+    graph = builder.build_graph(urls)
+
+    print(graph)
 
 # {
 #     "domain": "https://example.org",
