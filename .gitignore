@@ -167,3 +167,6 @@ output/
 ignored/
 temp/
 final/
+
+# json files
+/json
